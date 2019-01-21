@@ -8,7 +8,8 @@
 
 ## About
 This will add a Serilog enricher for CMS data to your EPiServer site.
-See [Serilog wiki](https://github.com/serilog/serilog/wiki/ for information about Serilog.
+
+See [Serilog wiki](https://github.com/serilog/serilog/wiki/) for information about Serilog.
 
 > *Powered by ReSharper*
 > [![image](https://i0.wp.com/jstemerdink.files.wordpress.com/2017/08/logo_resharper.png)](http://jetbrains.com)

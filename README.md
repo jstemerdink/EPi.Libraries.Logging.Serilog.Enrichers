@@ -14,7 +14,8 @@
 
 
 ## About
-This will add Serilog logging enrichers to your EPiServer site
+This will add Serilog logging enrichers to your EPiServer site.
+
 See [Serilog wiki](https://github.com/serilog/serilog/wiki/) for information about Serilog.
 
 ## Parts
