@@ -7,9 +7,9 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT%20license-blue.svg?style=flat)](LICENSE)
 
 
-[![Reliability](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink:EPi.Libraries.Logging.Serilog.Enrichers&metric=reliability_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog&metric=Reliability)
-[![Security](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink:EPi.Libraries.Logging.Serilog.Enrichersg&metric=security_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog&metric=Security)
-[![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=sqale_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog&metric=Maintainability)
+[![Reliability](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink:EPi.Libraries.Logging.Serilog.Enrichers&metric=reliability_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=Reliability)
+[![Security](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink:EPi.Libraries.Logging.Serilog.Enrichersg&metric=security_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=Security)
+[![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=sqale_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=Maintainability)
 
 
 ## About

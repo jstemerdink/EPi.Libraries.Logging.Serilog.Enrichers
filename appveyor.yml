@@ -20,7 +20,7 @@ after_build:
 - cmd: appveyor PushArtifact "EPi.Libraries.Logging.Serilog.Enrichers.Cms.%GitVersion_NuGetVersion%.nupkg"
 - cmd: nuget pack EPi.Libraries.Logging.Serilog.Enrichers.Commerce\EPi.Libraries.Logging.Serilog.Enrichers.Commerce.csproj -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
 - cmd: appveyor PushArtifact "EPi.Libraries.Logging.Serilog.Enrichers.Commerce.%GitVersion_NuGetVersion%.nupkg"
-- 7z a EPi.Libraries.Logging.Serilog.Enrichers.Cms.%GitVersion_NuGetVersion%.zip %APPVEYOR_BUILD_FOLDER%EPi.Libraries.Logging.Serilog.Enrichers.Cms\bin\Release\EPi.Libraries.Logging.Serilog.Enrichers.Cms.dll
+- 7z a EPi.Libraries.Logging.Serilog.Enrichers.Cms.%GitVersion_NuGetVersion%.zip %APPVEYOR_BUILD_FOLDER%\EPi.Libraries.Logging.Serilog.Enrichers.Cms\bin\Release\EPi.Libraries.Logging.Serilog.Enrichers.Cms.dll
 - cmd: appveyor PushArtifact "EPi.Libraries.Logging.Serilog.Enrichers.Cms.%GitVersion_NuGetVersion%.zip"
 - 7z a EPi.Libraries.Logging.Serilog.Enrichers.Commerce.%GitVersion_NuGetVersion%.zip %APPVEYOR_BUILD_FOLDER%\EPi.Libraries.Logging.Serilog.Enrichers.Commerce\bin\Release\EPi.Libraries.Logging.Serilog.Enrichers.Commerce.dll
 - cmd: appveyor PushArtifact "EPi.Libraries.Logging.Serilog.Enrichers.Commerce.%GitVersion_NuGetVersion%.zip"
