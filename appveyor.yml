@@ -16,7 +16,7 @@ build_script:
   - msbuild "EPi.Libraries.Logging.Serilog.Enrichers.sln"
   - MSBuild.SonarQube.Runner.exe end /d:"sonar.login=0b0eec6902ab7d776899f79bfeff15d313dd6e09"
 after_build:
-- cmd: nuget packEPi.Libraries.Logging.Serilog.Enrichers.Cms\EPi.Libraries.Logging.Serilog.Enrichers.Cms.csproj -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+- cmd: nuget pack EPi.Libraries.Logging.Serilog.Enrichers.Cms\EPi.Libraries.Logging.Serilog.Enrichers.Cms.csproj -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
 - cmd: appveyor PushArtifact "EPi.Libraries.Logging.Serilog.Enrichers.Cms.%GitVersion_NuGetVersion%.nupkg"
 - cmd: nuget pack EPi.Libraries.Logging.Serilog.Enrichers.Commerce\EPi.Libraries.Logging.Serilog.Enrichers.Commerce.csproj -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
 - cmd: appveyor PushArtifact "EPi.Libraries.Logging.Serilog.Enrichers.Commerce.%GitVersion_NuGetVersion%.nupkg"
