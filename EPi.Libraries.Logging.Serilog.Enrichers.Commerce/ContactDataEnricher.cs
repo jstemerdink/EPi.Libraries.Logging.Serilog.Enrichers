@@ -24,6 +24,7 @@
 namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
 {
     using System;
+    using System.Web;
 
     using Mediachase.Commerce.Customers;
 
@@ -34,7 +35,7 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
     /// Class CommerceDataEnricher.
     /// </summary>
     /// <seealso cref="ILogEventEnricher" />
-    public class ContactDataEnricher : ILogEventEnricher 
+    public class ContactDataEnricher : ILogEventEnricher
     {
         /// <summary>
         /// The current contact property name
@@ -53,7 +54,7 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-           if (logEvent == null || logEvent.Level != LogEventLevel.Error || logEvent.Level != LogEventLevel.Fatal)
+            if (logEvent == null)
             {
                 return;
             }
@@ -67,12 +68,18 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
 
             if (customerContext.CurrentContactId != Guid.Empty)
             {
-                logEvent.AddPropertyIfAbsent(new LogEventProperty(CurrentContactIdPropertyName, new ScalarValue(customerContext.CurrentContactId)));
+                logEvent.AddPropertyIfAbsent(
+                    new LogEventProperty(
+                        name: CurrentContactIdPropertyName,
+                        value: new ScalarValue(value: customerContext.CurrentContactId)));
             }
 
-            if (!string.IsNullOrWhiteSpace(customerContext.CurrentContactName))
+            if (!string.IsNullOrWhiteSpace(value: customerContext.CurrentContactName))
             {
-                logEvent.AddPropertyIfAbsent(new LogEventProperty(CurrentContactNamePropertyName, new ScalarValue(customerContext.CurrentContactName)));
+                logEvent.AddPropertyIfAbsent(
+                    new LogEventProperty(
+                        name: CurrentContactNamePropertyName,
+                        value: new ScalarValue(value: customerContext.CurrentContactName)));
             }
         }
     }

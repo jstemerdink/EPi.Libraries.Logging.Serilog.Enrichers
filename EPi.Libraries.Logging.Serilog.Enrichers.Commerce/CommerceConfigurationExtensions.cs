@@ -50,6 +50,22 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         }
 
         /// <summary>
+        /// Enrich the logging with customer data, if DNT is not true
+        /// </summary>
+        /// <param name="enrichmentConfiguration">The enrichment configuration.</param>
+        /// <returns>The LoggerConfiguration.</returns>
+        /// <exception cref="ArgumentNullException">enrichmentConfiguration is null</exception>
+        public static LoggerConfiguration WithCustomerDataObeyingDnt(this LoggerEnrichmentConfiguration enrichmentConfiguration)
+        {
+            if (enrichmentConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(enrichmentConfiguration));
+            }
+
+            return enrichmentConfiguration.With<ContactDataEnricherObeyDnt>();
+        }
+
+        /// <summary>
         /// Enrich the logging with cart data.
         /// </summary>
         /// <param name="enrichmentConfiguration">The enrichment configuration.</param>

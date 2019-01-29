@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MarketDataEnricher.cs" company="Jeroen Stemerdink">
+// <copyright file="ContactDataEnricherObeyDnt.cs" company="Jeroen Stemerdink">
 //      Copyright © 2019 Jeroen Stemerdink.
 //      Permission is hereby granted, free of charge, to any person obtaining a copy
 //      of this software and associated documentation files (the "Software"), to deal
@@ -23,23 +23,29 @@
 
 namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
 {
-    using EPiServer.ServiceLocation;
+    using System;
+    using System.Web;
 
-    using Mediachase.Commerce;
+    using Mediachase.Commerce.Customers;
 
     using global::Serilog.Core;
     using global::Serilog.Events;
 
     /// <summary>
-    /// Class CommerceDataEnricher.
+    /// Class ContactDataEnricherObeyDNT.
     /// </summary>
     /// <seealso cref="ILogEventEnricher" />
-    public class MarketDataEnricher : ILogEventEnricher 
+    public class ContactDataEnricherObeyDnt : ILogEventEnricher
     {
         /// <summary>
-        /// The current market property name
+        /// The current contact property name
         /// </summary>
-        public const string CurrentMarketPropertyName = "CurrentMarket";
+        public const string CurrentContactIdPropertyName = "CurrentContactId";
+
+        /// <summary>
+        /// The current contact name property name
+        /// </summary>
+        public const string CurrentContactNamePropertyName = "CurrentContactName";
 
         /// <summary>
         /// Enrich the log event.
@@ -48,25 +54,59 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-           if (logEvent == null)
+            if (logEvent == null)
             {
                 return;
             }
 
-            ICurrentMarket currentMarket;
+            CustomerContext customerContext = CustomerContext.Current;
 
-            try
-            {
-                currentMarket = ServiceLocator.Current.GetInstance<ICurrentMarket>();
-            }
-            catch (ActivationException)
+            if (customerContext == null)
             {
                 return;
             }
 
-            if (currentMarket != null)
+            if (customerContext.CurrentContactId != Guid.Empty)
             {
-                logEvent.AddPropertyIfAbsent(new LogEventProperty(CurrentMarketPropertyName, new ScalarValue(currentMarket.GetCurrentMarket().MarketName)));
+                logEvent.AddPropertyIfAbsent(
+                    new LogEventProperty(
+                        name: CurrentContactIdPropertyName,
+                        value: new ScalarValue(value: customerContext.CurrentContactId)));
+            }
+
+            bool doNotTrack = false;
+
+            if (HttpContext.Current != null)
+            {
+                string doNotTrackHeader = null;
+
+                try
+                {
+                    doNotTrackHeader = HttpContext.Current.Request.Headers.Get("DNT");
+                }
+                catch (HttpException)
+                {
+                    // Not necessary to log.
+                }
+
+                // Should not track when value equals 1
+                if (doNotTrackHeader != null && doNotTrackHeader.Equals("1"))
+                {
+                    doNotTrack = true;
+                }
+            }
+
+            if (doNotTrack)
+            {
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(value: customerContext.CurrentContactName))
+            {
+                logEvent.AddPropertyIfAbsent(
+                    new LogEventProperty(
+                        name: CurrentContactNamePropertyName,
+                        value: new ScalarValue(value: customerContext.CurrentContactName)));
             }
         }
     }
