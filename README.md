@@ -5,12 +5,11 @@
 [![Platform](https://img.shields.io/badge/platform-.NET%204.6.1-blue.svg?style=flat)](https://msdn.microsoft.com/en-us/library/w0x726c2%28v=vs.110%29.aspx)
 [![Platform](https://img.shields.io/badge/EPiServer.Commerce-%2012.0.0-orange.svg?style=flat)](http://world.episerver.com/cms/)
 ![](https://img.shields.io/github/license/jstemerdink/EPi.Libraries.Logging.Serilog.Enrichers.svg)
-[![Stories in Backlog](https://badge.waffle.io/jstemerdink/EPi.Libraries.Logging.Serilog.Enrichers.svg?label=enhancement&title=Backlog)](https://waffle.io/jstemerdink/EPi.Libraries.Logging.Serilog.Enrichers)
 
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=reliability_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=reliability_rating)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=security_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=security_rating)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=sqale_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=sqale_rating)
-
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/jstemerdink/EPi.Libraries.Logging.Serilog.Enrichers.svg?columns=all)](https://waffle.io/jstemerdink/EPi.Libraries.Logging.Serilog.Enrichers) 
 
 ## About
 This will add Serilog logging enrichers to your EPiServer site.
