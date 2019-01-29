@@ -7,7 +7,6 @@
 ![](https://img.shields.io/github/license/jstemerdink/EPi.Libraries.Logging.Serilog.Enrichers.svg)
 [![Stories in Backlog](https://badge.waffle.io/jstemerdink/EPi.Libraries.Logging.Serilog.Enrichers.svg?label=enhancement&title=Backlog)](https://waffle.io/jstemerdink/EPi.Libraries.Logging.Serilog.Enrichers)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=alert_status)](https://sonarcloud.io/dashboard?id=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=reliability_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=reliability_rating)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=security_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=security_rating)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=sqale_rating)](https://sonarcloud.io/component_measures?id=jstemerdink%3AEPi.Libraries.Logging.Serilog.Enrichers&metric=sqale_rating)
