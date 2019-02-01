@@ -48,6 +48,25 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         public const string CurrentContactNamePropertyName = "CurrentContactName";
 
         /// <summary>
+        /// The current contact email property name
+        /// </summary>
+        public const string CurrentContactEmailPropertyName = "CurrentContactEmail";
+
+        /// <summary>
+        /// Indicates whether to obey DNT header
+        /// </summary>
+        private readonly bool obeyDoNotTrack;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContactDataEnricher"/> class.
+        /// </summary>
+        /// <param name="obeyDoNotTrack">if set to <c>true</c> [obey do not track].</param>
+        public ContactDataEnricher(bool obeyDoNotTrack)
+        {
+            this.obeyDoNotTrack = obeyDoNotTrack;
+        }
+
+        /// <summary>
         /// Enrich the log event.
         /// </summary>
         /// <param name="logEvent">The log event to enrich.</param>
@@ -55,6 +74,33 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
             if (logEvent == null)
+            {
+                return;
+            }
+
+            bool doNotTrack = false;
+
+            if (this.obeyDoNotTrack && HttpContext.Current != null)
+            {
+                string doNotTrackHeader = null;
+
+                try
+                {
+                    doNotTrackHeader = HttpContext.Current.Request.Headers.Get("DNT");
+                }
+                catch (HttpException)
+                {
+                    // Not necessary to log.
+                }
+
+                // Should not track when value equals 1
+                if (doNotTrackHeader != null && doNotTrackHeader.Equals("1"))
+                {
+                    doNotTrack = true;
+                }
+            }
+
+            if (doNotTrack)
             {
                 return;
             }
@@ -80,6 +126,14 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
                     new LogEventProperty(
                         name: CurrentContactNamePropertyName,
                         value: new ScalarValue(value: customerContext.CurrentContactName)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(value: customerContext.CurrentContact?.Email))
+            {
+                logEvent.AddPropertyIfAbsent(
+                    new LogEventProperty(
+                        name: CurrentContactEmailPropertyName,
+                        value: new ScalarValue(value: customerContext.CurrentContact.Email)));
             }
         }
     }
