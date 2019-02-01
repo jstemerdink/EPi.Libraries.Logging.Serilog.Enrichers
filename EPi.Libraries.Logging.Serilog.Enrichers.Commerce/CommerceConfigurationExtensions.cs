@@ -46,7 +46,7 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
                 throw new ArgumentNullException(nameof(enrichmentConfiguration));
             }
 
-            return enrichmentConfiguration.With<ContactDataEnricher>();
+            return enrichmentConfiguration.With(new ContactDataEnricher(false));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
                 throw new ArgumentNullException(nameof(enrichmentConfiguration));
             }
 
-            return enrichmentConfiguration.With<ContactDataEnricherObeyDnt>();
+            return enrichmentConfiguration.With(new ContactDataEnricher(true));
         }
 
         /// <summary>

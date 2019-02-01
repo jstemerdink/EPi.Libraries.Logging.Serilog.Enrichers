@@ -229,7 +229,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContactDataEnricherObeyDnt.cs" />
     <Compile Include="DefaultCartDataEnricher.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MarketDataEnricher.cs" />
