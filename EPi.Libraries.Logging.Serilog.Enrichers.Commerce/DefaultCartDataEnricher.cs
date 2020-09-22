@@ -81,21 +81,33 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
                 customerId: customerContext.CurrentContactId,
                 name: Cart.DefaultName).FirstOrDefault();
 
-            if (cart != null)
+            string serializedCart = string.Empty;
+
+            if (cart != null && cart.GetAllLineItems().Any())
+            {
+                try
+                {
+                    serializedCart = JsonConvert.SerializeObject(
+                        value: cart,
+                        formatting: Formatting.Indented,
+                        settings: new JsonSerializerSettings
+                                      {
+                                          ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                                          NullValueHandling = NullValueHandling.Ignore,
+                                          DefaultValueHandling = DefaultValueHandling.Ignore
+                                      });
+                }
+                catch
+                {
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(serializedCart))
             {
                 logEvent.AddPropertyIfAbsent(
                     new LogEventProperty(
                         name: CurrentCartPropertyName,
-                        value: new ScalarValue(
-                            JsonConvert.SerializeObject(
-                                value: cart,
-                                formatting: Formatting.Indented,
-                                settings: new JsonSerializerSettings
-                                              {
-                                                  ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                                                  NullValueHandling = NullValueHandling.Ignore,
-                                                  DefaultValueHandling = DefaultValueHandling.Ignore
-                                              }))));
+                        value: new ScalarValue(serializedCart)));
             }
         }
     }
