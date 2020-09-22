@@ -23,6 +23,8 @@
 
 namespace EPi.Libraries.Logging.Serilog.Enrichers.Cms
 {
+    using System;
+
     using EPiServer.Globalization;
     using EPiServer.ServiceLocation;
     using EPiServer.Web.Routing;
@@ -91,19 +93,31 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Cms
                     name: ContentIdPropertyName,
                     value: new ScalarValue(value: contentRouteRouteHelper.Content.ContentLink.ID)));
 
-            logEvent.AddPropertyIfAbsent(
-                new LogEventProperty(
-                    name: ContentDataPropertyName,
-                    value: new ScalarValue(
-                        JsonConvert.SerializeObject(
-                            value: contentRouteRouteHelper.Content,
-                            formatting: Formatting.Indented,
-                            settings: new JsonSerializerSettings
-                                          {
-                                              ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                                              NullValueHandling = NullValueHandling.Ignore,
-                                              DefaultValueHandling = DefaultValueHandling.Ignore
-                                          }))));
+            string serializedContent = string.Empty;
+
+            try
+            {
+                serializedContent = JsonConvert.SerializeObject(
+                    value: contentRouteRouteHelper.Content,
+                    formatting: Formatting.Indented,
+                    settings: new JsonSerializerSettings
+                                  {
+                                      ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                                      NullValueHandling = NullValueHandling.Ignore,
+                                      DefaultValueHandling = DefaultValueHandling.Ignore
+                                  });
+            }
+            catch
+            {
+            }
+
+            if (!string.IsNullOrWhiteSpace(serializedContent))
+            {
+                logEvent.AddPropertyIfAbsent(
+                    new LogEventProperty(
+                        name: ContentDataPropertyName,
+                        value: new ScalarValue(serializedContent)));
+            }
         }
     }
 }
