@@ -83,7 +83,7 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Cms
                     name: PreferredCulturePropertyName,
                     value: new ScalarValue(value: ContentLanguage.PreferredCulture.Name)));
 
-            if (contentRouteRouteHelper?.Content == null)
+            if (contentRouteRouteHelper?.Content == null || contentRouteRouteHelper?.Content?.ContentLink == null)
             {
                 return;
             }
