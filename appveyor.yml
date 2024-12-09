@@ -26,11 +26,11 @@ build_script:
   - dotnet sonarscanner end /d:"sonar.login=0b0eec6902ab7d776899f79bfeff15d313dd6e09"
 
 after_build:
-- cmd: appveyor PushArtifact "EPi.Libraries.Logging.Serilog.Enrichers.Cms.%GitVersion_NuGetVersion%.nupkg"
-- cmd: appveyor PushArtifact "EPi.Libraries.Logging.Serilog.Enrichers.Commerce.%GitVersion_NuGetVersion%.nupkg"
-- 7z a EPi.Libraries.Logging.Serilog.Enrichers.Cms.%GitVersion_NuGetVersion%.zip %APPVEYOR_BUILD_FOLDER%\bin\Release\*\*.dll
+- cmd: appveyor PushArtifact "%APPVEYOR_BUILD_FOLDER%\EPi.Libraries.Keywords\bin\Release\EPi.Libraries.Logging.Serilog.Enrichers.Cms.%GitVersion_NuGetVersion%.nupkg"
+- cmd: appveyor PushArtifact "%APPVEYOR_BUILD_FOLDER%\EPi.Libraries.Keywords\bin\Release\EPi.Libraries.Logging.Serilog.Enrichers.Commerce.%GitVersion_NuGetVersion%.nupkg"
+- 7z a EPi.Libraries.Logging.Serilog.Enrichers.Cms.%GitVersion_NuGetVersion%.zip %APPVEYOR_BUILD_FOLDER%\EPi.Libraries.Logging.Serilog.Enrichers.Cms\bin\Release\bin\Release\*\*.dll
 - cmd: appveyor PushArtifact "EPi.Libraries.Logging.Serilog.Enrichers.Cms.%GitVersion_NuGetVersion%.zip"
-- 7z a EPi.Libraries.Logging.Serilog.Enrichers.Commerce.%GitVersion_NuGetVersion%.zip %APPVEYOR_BUILD_FOLDER%\bin\Release\*\*.dll
+- 7z a EPi.Libraries.Logging.Serilog.Enrichers.Commerce.%GitVersion_NuGetVersion%.zip %APPVEYOR_BUILD_FOLDER%\EPi.Libraries.Logging.Serilog.Enrichers.Commerce\bin\Release\bin\Release\*\*.dll
 - cmd: appveyor PushArtifact "EPi.Libraries.Logging.Serilog.Enrichers.Commerce.%GitVersion_NuGetVersion%.zip"
 
 before_package:
