@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="CommerceConfigurationExtensions.cs" company="Jeroen Stemerdink">
-//      Copyright © 2019 Jeroen Stemerdink.
+//      Copyright © 2024 Jeroen Stemerdink.
 //      Permission is hereby granted, free of charge, to any person obtaining a copy
 //      of this software and associated documentation files (the "Software"), to deal
 //      in the Software without restriction, including without limitation the rights
@@ -27,6 +27,7 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
 
     using global::Serilog;
     using global::Serilog.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
     /// Class CommerceConfigurationExtensions.
@@ -37,32 +38,19 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         /// Enrich the logging with customer data.
         /// </summary>
         /// <param name="enrichmentConfiguration">The enrichment configuration.</param>
+        /// <param name="serviceProvider">The service provider.</param>
         /// <returns>The LoggerConfiguration.</returns>
-        /// <exception cref="ArgumentNullException">enrichmentConfiguration is null</exception>
-        public static LoggerConfiguration WithCustomerData(this LoggerEnrichmentConfiguration enrichmentConfiguration)
+        /// <exception cref="System.ArgumentNullException">enrichmentConfiguration is null</exception>
+        public static LoggerConfiguration WithCustomerData(this LoggerEnrichmentConfiguration enrichmentConfiguration, IServiceProvider serviceProvider)
         {
             if (enrichmentConfiguration == null)
             {
                 throw new ArgumentNullException(nameof(enrichmentConfiguration));
             }
 
-            return enrichmentConfiguration.With(new ContactDataEnricher(false));
-        }
+            ContactDataEnricher enricher = serviceProvider.GetService<ContactDataEnricher>();
 
-        /// <summary>
-        /// Enrich the logging with customer data, if DNT is not true
-        /// </summary>
-        /// <param name="enrichmentConfiguration">The enrichment configuration.</param>
-        /// <returns>The LoggerConfiguration.</returns>
-        /// <exception cref="ArgumentNullException">enrichmentConfiguration is null</exception>
-        public static LoggerConfiguration WithCustomerDataObeyingDnt(this LoggerEnrichmentConfiguration enrichmentConfiguration)
-        {
-            if (enrichmentConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(enrichmentConfiguration));
-            }
-
-            return enrichmentConfiguration.With(new ContactDataEnricher(true));
+            return enrichmentConfiguration.With(enricher);
         }
 
         /// <summary>

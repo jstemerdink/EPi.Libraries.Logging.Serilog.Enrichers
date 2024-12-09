@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Serilog logging enrichers for EPiServer CMS</description>
     <releaseNotes></releaseNotes>
-    <copyright>Copyright © Jeroen Stemerdink 2019</copyright>
+    <copyright>Copyright © Jeroen Stemerdink 2024</copyright>
     <tags>logging Serilog</tags>
     <dependencies>
       <dependency id="EPiServer.Framework" version="11.4.0" />
