@@ -13,7 +13,7 @@ init:
 install:
 - ps: dotnet tool install --global GitVersion.Tool --version 5.*
 - ps: dotnet tool install --global dotnet-sonarscanner
-- cmd: nuget sources add -Name EPiServerFeed -Source https://nuget.episerver.com/feed/packages.svc/
+- cmd: nuget sources add -Name EPiServerFeed -Source https://nuget.optimizely.com/feed/packages.svc/
 
 before_build:
 - cmd: nuget restore
