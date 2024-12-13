@@ -56,17 +56,24 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         /// </summary>
         public const string CurrentContactEmailPropertyName = "CurrentContactEmail";
 
+        /// <summary>
+        /// The HTTP context accessor
+        /// </summary>
         private readonly IHttpContextAccessor httpContextAccessor;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ContactDataEnricher" /> class.
+        /// Initializes a new instance of the <see cref="ContactDataEnricher"/> class.
         /// </summary>
-        /// <param name="httpContextAccessor">The HTTP context accessor.</param>
-        public ContactDataEnricher(IHttpContextAccessor httpContextAccessor)
+        public ContactDataEnricher()
+            : this(new HttpContextAccessor())
         {
-            this.httpContextAccessor = httpContextAccessor;
         }
 
+        internal ContactDataEnricher(IHttpContextAccessor contextAccessor)
+        {
+            this.httpContextAccessor = contextAccessor;
+        }
+        
         /// <summary>
         /// Enrich the log event.
         /// </summary>

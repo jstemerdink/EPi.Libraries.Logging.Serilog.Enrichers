@@ -58,11 +58,6 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Cms
         /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-            if (logEvent == null)
-            {
-                return;
-            }
-
             SiteDefinition siteDefinition = SiteDefinition.Current;
 
             if (!string.IsNullOrWhiteSpace(value: siteDefinition.Name))
