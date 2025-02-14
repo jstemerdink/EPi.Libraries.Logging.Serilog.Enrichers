@@ -48,6 +48,29 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         /// </summary>
         public const string CurrentCartPropertyName = "CurrentCart";
 
+        readonly string _propertyName;
+        readonly string _cartName;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultCartDataEnricher"/> class.
+        /// </summary>
+        public DefaultCartDataEnricher()
+        {
+            _propertyName = CurrentCartPropertyName;
+            _cartName = Cart.DefaultName;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultCartDataEnricher" /> class.
+        /// </summary>
+        /// <param name="propertyName">The name.</param>
+        /// <param name="cartName">Name of the cart.</param>
+        public DefaultCartDataEnricher(string propertyName, string cartName)
+        {
+            _propertyName = propertyName;
+            _cartName = cartName;
+        }
+
         /// <summary>
         /// Enrich the log event.
         /// </summary>
@@ -63,48 +86,16 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
                 return;
             }
 
-            try
-            {
-                orderRepository = ServiceLocator.Current.GetInstance<IOrderRepository>();
-            }
-            catch (ActivationException)
-            {
-                return;
-            }
-
-            ICart cart = orderRepository.Load<ICart>(
-                customerId: customerContext.CurrentContactId,
-                name: Cart.DefaultName).FirstOrDefault();
-
-            string serializedCart = string.Empty;
-
-            if (cart != null && cart.GetAllLineItems().Any())
-            {
-                try
-                {
-                    serializedCart = JsonConvert.SerializeObject(
-                        value: cart,
-                        formatting: Formatting.Indented,
-                        settings: new JsonSerializerSettings
-                                      {
-                                          ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                                          NullValueHandling = NullValueHandling.Ignore,
-                                          DefaultValueHandling = DefaultValueHandling.Ignore
-                                      });
-                }
-                catch
-                {
-                    return;
-                }
-            }
-
+            string serializedCart = Helpers.GetCartData(_cartName);
+            
             if (!string.IsNullOrWhiteSpace(serializedCart))
             {
                 logEvent.AddPropertyIfAbsent(
                     new LogEventProperty(
-                        name: CurrentCartPropertyName,
+                        name: _propertyName,
                         value: new ScalarValue(serializedCart)));
             }
         }
+
     }
 }

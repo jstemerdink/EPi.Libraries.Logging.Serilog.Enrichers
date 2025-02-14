@@ -21,6 +21,8 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
+
 namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
 {
     using System;
