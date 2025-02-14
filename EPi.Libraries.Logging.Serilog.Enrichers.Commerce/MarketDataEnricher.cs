@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="MarketDataEnricher.cs" company="Jeroen Stemerdink">
-//      Copyright © 2019 Jeroen Stemerdink.
+//      Copyright © 2024 Jeroen Stemerdink.
 //      Permission is hereby granted, free of charge, to any person obtaining a copy
 //      of this software and associated documentation files (the "Software"), to deal
 //      in the Software without restriction, including without limitation the rights
@@ -34,7 +34,7 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
     /// Class CommerceDataEnricher.
     /// </summary>
     /// <seealso cref="ILogEventEnricher" />
-    public class MarketDataEnricher : ILogEventEnricher 
+    public class MarketDataEnricher : ILogEventEnricher
     {
         /// <summary>
         /// The current market property name
@@ -48,11 +48,6 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-           if (logEvent == null)
-            {
-                return;
-            }
-
             ICurrentMarket currentMarket;
 
             try

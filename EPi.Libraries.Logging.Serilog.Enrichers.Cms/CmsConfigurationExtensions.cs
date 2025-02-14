@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="CmsConfigurationExtensions.cs" company="Jeroen Stemerdink">
-//      Copyright © 2019 Jeroen Stemerdink.
+//      Copyright © 2024 Jeroen Stemerdink.
 //      Permission is hereby granted, free of charge, to any person obtaining a copy
 //      of this software and associated documentation files (the "Software"), to deal
 //      in the Software without restriction, including without limitation the rights

@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="ContactDataEnricher.cs" company="Jeroen Stemerdink">
-//      Copyright © 2019 Jeroen Stemerdink.
+//      Copyright © 2024 Jeroen Stemerdink.
 //      Permission is hereby granted, free of charge, to any person obtaining a copy
 //      of this software and associated documentation files (the "Software"), to deal
 //      in the Software without restriction, including without limitation the rights
@@ -24,13 +24,17 @@
 namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
 {
     using System;
-    using System.Web;
+    using System.Linq;
 
     using Mediachase.Commerce.Customers;
 
     using global::Serilog.Core;
     using global::Serilog.Events;
 
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Primitives;
+    using Microsoft.Net.Http.Headers;
+    
     /// <summary>
     /// Class CommerceDataEnricher.
     /// </summary>
@@ -53,19 +57,23 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         public const string CurrentContactEmailPropertyName = "CurrentContactEmail";
 
         /// <summary>
-        /// Indicates whether to obey DNT header
+        /// The HTTP context accessor
         /// </summary>
-        private readonly bool obeyDoNotTrack;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactDataEnricher"/> class.
         /// </summary>
-        /// <param name="obeyDoNotTrack">if set to <c>true</c> [obey do not track].</param>
-        public ContactDataEnricher(bool obeyDoNotTrack)
+        public ContactDataEnricher()
+            : this(new HttpContextAccessor())
         {
-            this.obeyDoNotTrack = obeyDoNotTrack;
         }
 
+        internal ContactDataEnricher(IHttpContextAccessor contextAccessor)
+        {
+            this.httpContextAccessor = contextAccessor;
+        }
+        
         /// <summary>
         /// Enrich the log event.
         /// </summary>
@@ -73,34 +81,22 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-            if (logEvent == null)
+            HttpContext httpContext = this.httpContextAccessor.HttpContext;
+
+            if (httpContext == null)
             {
                 return;
             }
 
-            bool doNotTrack = false;
+            string doNotTrackHeader = null;
 
-            if (this.obeyDoNotTrack && HttpContext.Current != null)
+            if (httpContext.Request.Headers.TryGetValue(HeaderNames.DNT, out StringValues headerValue))
             {
-                string doNotTrackHeader = null;
-
-                try
-                {
-                    doNotTrackHeader = HttpContext.Current.Request.Headers.Get("DNT");
-                }
-                catch (HttpException)
-                {
-                    // Not necessary to log.
-                }
-
-                // Should not track when value equals 1
-                if (doNotTrackHeader != null && doNotTrackHeader.Equals("1"))
-                {
-                    doNotTrack = true;
-                }
+                doNotTrackHeader = headerValue.FirstOrDefault();
             }
 
-            if (doNotTrack)
+            // Can track when value equals 0
+            if (doNotTrackHeader is "1")
             {
                 return;
             }

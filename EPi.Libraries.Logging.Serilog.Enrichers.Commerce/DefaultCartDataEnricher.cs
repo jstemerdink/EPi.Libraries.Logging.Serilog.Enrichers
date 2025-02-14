@@ -1,6 +1,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 // <copyright file="DefaultCartDataEnricher.cs" company="Jeroen Stemerdink">
-//      Copyright © 2019 Jeroen Stemerdink.
+//      Copyright © 2024 Jeroen Stemerdink.
 //      Permission is hereby granted, free of charge, to any person obtaining a copy
 //      of this software and associated documentation files (the "Software"), to deal
 //      in the Software without restriction, including without limitation the rights
@@ -48,6 +48,29 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         /// </summary>
         public const string CurrentCartPropertyName = "CurrentCart";
 
+        readonly string _propertyName;
+        readonly string _cartName;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultCartDataEnricher"/> class.
+        /// </summary>
+        public DefaultCartDataEnricher()
+        {
+            _propertyName = CurrentCartPropertyName;
+            _cartName = Cart.DefaultName;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultCartDataEnricher" /> class.
+        /// </summary>
+        /// <param name="propertyName">The name.</param>
+        /// <param name="cartName">Name of the cart.</param>
+        public DefaultCartDataEnricher(string propertyName, string cartName)
+        {
+            _propertyName = propertyName;
+            _cartName = cartName;
+        }
+
         /// <summary>
         /// Enrich the log event.
         /// </summary>
@@ -55,11 +78,6 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
         /// <param name="propertyFactory">Factory for creating new properties to add to the event.</param>
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
-            if (logEvent == null)
-            {
-                return;
-            }
-
             IOrderRepository orderRepository;
             CustomerContext customerContext = CustomerContext.Current;
 
@@ -68,47 +86,16 @@ namespace EPi.Libraries.Logging.Serilog.Enrichers.Commerce
                 return;
             }
 
-            try
-            {
-                orderRepository = ServiceLocator.Current.GetInstance<IOrderRepository>();
-            }
-            catch (ActivationException)
-            {
-                return;
-            }
-
-            ICart cart = orderRepository.Load<ICart>(
-                customerId: customerContext.CurrentContactId,
-                name: Cart.DefaultName).FirstOrDefault();
-
-            string serializedCart = string.Empty;
-
-            if (cart != null && cart.GetAllLineItems().Any())
-            {
-                try
-                {
-                    serializedCart = JsonConvert.SerializeObject(
-                        value: cart,
-                        formatting: Formatting.Indented,
-                        settings: new JsonSerializerSettings
-                                      {
-                                          ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                                          NullValueHandling = NullValueHandling.Ignore,
-                                          DefaultValueHandling = DefaultValueHandling.Ignore
-                                      });
-                }
-                catch
-                {
-                }
-            }
-
+            string serializedCart = Helpers.GetCartData(_cartName);
+            
             if (!string.IsNullOrWhiteSpace(serializedCart))
             {
                 logEvent.AddPropertyIfAbsent(
                     new LogEventProperty(
-                        name: CurrentCartPropertyName,
+                        name: _propertyName,
                         value: new ScalarValue(serializedCart)));
             }
         }
+
     }
 }

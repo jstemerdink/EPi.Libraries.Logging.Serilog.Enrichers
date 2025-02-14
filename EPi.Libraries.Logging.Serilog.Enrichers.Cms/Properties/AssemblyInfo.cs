@@ -2,16 +2,6 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
-// General Information about an assembly is controlled through the following
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("EPi.Libraries.Logging.Serilog.Enrichers.Cms")]
-[assembly: AssemblyDescription("Serilog enricher for Episerver CMS")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jeroen Stemerdink")]
-[assembly: AssemblyProduct("EPi.Libraries.Logging.Serilog.Enrichers.Cms")]
-[assembly: AssemblyCopyright("Copyright © Jeroen Stemerdink 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -19,7 +9,7 @@ using System.Runtime.InteropServices;
 // to COM components.  If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
-[assembly: CLSCompliant(true)]
+[assembly: CLSCompliant(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("c623c052-c941-4282-ab56-d28b4cc351c2")]
